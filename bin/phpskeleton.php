@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-function getComposerFile($dir)
+declare(strict_types=1);
+
+function getComposerFile(string $dir): ?string
 {
     do {
         $dir = dirname($dir);
@@ -12,17 +14,23 @@ function getComposerFile($dir)
             return $composerFile;
         }
     } while (DIRECTORY_SEPARATOR !== $dir);
+
+    return null;
 }
 
-function getNamespace($file)
+function getNamespace(string $file): ?string
 {
     if (!$composerFile = getComposerFile($file)) {
-        return;
+        return null;
     }
 
     $composerData = json_decode(file_get_contents($composerFile), true);
 
     $path = str_replace([dirname($composerFile).DIRECTORY_SEPARATOR, basename($file)], '', $file);
+
+    if (!isset($composerData['autoload']['psr-4'])) {
+        return null;
+    }
 
     foreach ($composerData['autoload']['psr-4'] as $namespacePrefix => $pathPrefixes) {
         if (!is_array($pathPrefixes)) {
@@ -37,23 +45,29 @@ function getNamespace($file)
                     $namespace = $namespacePrefix.$namespace;
                 }
 
-                return rtrim($namespace, '\\');
+                if ($namespace = rtrim($namespace, '\\')) {
+                    return $namespace;
+                }
             }
         }
     }
+
+    return null;
 }
 
 $file = $argv[1];
 
 $class = basename($file, '.php');
 
-if (!$namespace = getNamespace($file)) {
-    echo '<?php';
+if (null === $namespace = getNamespace($file)) {
+    echo "<?php\n\ndeclare(strict_types=1);";
     exit;
 }
 
 echo <<<PHP
 <?php
+
+declare(strict_types=1);
 
 namespace $namespace;
 
