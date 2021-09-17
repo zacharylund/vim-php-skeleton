@@ -38,7 +38,7 @@ function getNamespace(string $file): ?string
         }
 
         foreach ($pathPrefixes as $pathPrefix) {
-            if (0 === strpos($path, $pathPrefix)) {
+            if ('' === $pathPrefix || 0 === strpos($path, $pathPrefix)) {
                 $namespace = str_replace(DIRECTORY_SEPARATOR, '\\', str_replace($pathPrefix, '', $path));
 
                 if ($namespacePrefix) {
