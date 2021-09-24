@@ -28,11 +28,17 @@ function getNamespace(string $file): ?string
 
     $path = str_replace([dirname($composerFile).DIRECTORY_SEPARATOR, basename($file)], '', $file);
 
-    if (!isset($composerData['autoload']['psr-4'])) {
-        return null;
+    $autoloads = [];
+
+    if (isset($composerData['autoload-dev']['psr-4'])) {
+        $autoloads = array_merge($autoloads, $composerData['autoload-dev']['psr-4']);
     }
 
-    foreach ($composerData['autoload']['psr-4'] as $namespacePrefix => $pathPrefixes) {
+    if (isset($composerData['autoload']['psr-4'])) {
+        $autoloads = array_merge($autoloads, $composerData['autoload']['psr-4']);
+    }
+
+    foreach ($autoloads as $namespacePrefix => $pathPrefixes) {
         if (!is_array($pathPrefixes)) {
             $pathPrefixes = [$pathPrefixes];
         }

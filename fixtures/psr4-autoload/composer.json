@@ -5,5 +5,10 @@
             "Company\\": ["company1/", "company2/"],
             "": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\App\\": "tests/"
+        }
     }
 }
