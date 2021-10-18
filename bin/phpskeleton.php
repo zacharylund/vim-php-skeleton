@@ -70,6 +70,16 @@ if (null === $namespace = getNamespace($file)) {
     exit;
 }
 
+if ('Trait' === substr($class, -5)) {
+    $type = 'trait';
+} elseif ('Interface' === substr($class, -9)) {
+    $type = 'interface';
+} elseif ('Abstract' === substr($class, 0, 8)) {
+    $type = 'abstract class';
+} else {
+    $type = 'class';
+}
+
 echo <<<PHP
 <?php
 
@@ -77,7 +87,7 @@ declare(strict_types=1);
 
 namespace $namespace;
 
-class $class
+$type $class
 {
 
 }

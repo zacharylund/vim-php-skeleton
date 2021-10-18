@@ -29,6 +29,10 @@ final class PhpSkeletonTest extends TestCase
             [$psr4Autoload.'/company2/Security/Listener.php', "<?php\n\ndeclare(strict_types=1);\n\nnamespace Company\\Security;\n\nclass Listener\n{\n\n}"],
 
             [$psr4Autoload.'/tests/Controller/SiteControllerTest.php', "<?php\n\ndeclare(strict_types=1);\n\nnamespace Tests\\App\\Controller;\n\nclass SiteControllerTest\n{\n\n}"],
+
+            [$psr4Autoload.'/lib/AbstractTest.php', "<?php\n\ndeclare(strict_types=1);\n\nnamespace App;\n\nabstract class AbstractTest\n{\n\n}"],
+            [$psr4Autoload.'/lib/TestInterface.php', "<?php\n\ndeclare(strict_types=1);\n\nnamespace App;\n\ninterface TestInterface\n{\n\n}"],
+            [$psr4Autoload.'/lib/TestTrait.php', "<?php\n\ndeclare(strict_types=1);\n\nnamespace App;\n\ntrait TestTrait\n{\n\n}"],
         ];
     }
 
