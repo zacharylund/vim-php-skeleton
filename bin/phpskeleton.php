@@ -77,7 +77,7 @@ if ('Trait' === substr($class, -5)) {
 } elseif ('Abstract' === substr($class, 0, 8)) {
     $type = 'abstract class';
 } else {
-    $type = 'class';
+    $type = 'final class';
 }
 
 echo <<<PHP
